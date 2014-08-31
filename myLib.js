@@ -43,9 +43,10 @@
 
 	
 	/*
-     * @desc Определяет текущий язык сайта (по первой секции url),
+     * Определяет текущий язык сайта (по первой секции url),
 	 * если ничего не найдено возвращается первый из доступных языков
-     * @return string - возвращает текущий язык сайта (ru, en)
+	 * 
+     * @return {string} - возвращает текущий язык сайта (ru, en)
      */
 	my.getLang = function() {
 		var path = location.pathname,
@@ -59,23 +60,25 @@
 		
 		//если ничего не найдено первый в списке язык по умолчанию
 		return this.langs[0];
-	}
+	};
 	
 	/*
-     * @desc Возвращает языковую переменную из массива lang, в зависимости от текущего языка сайта
-     * @param string name - идентификатор языковой переменной
-     * @return string - возвращает языкову переменную
+     * Возвращает языковую переменную из массива lang, в зависимости от текущего языка сайта
+     * 
+     * @param {string} name - идентификатор языковой переменной
+     * @return {string} - возвращает языкову переменную
      */
 	my.getMessage = function(name) {
 		var lang = this.getLang(),
 			msg = this.lang[name][lang];
 		
 		return (msg !== undefined) ? msg : '';
-	}
+	};
 	
 	/**
 	 * Определяет языковую переменную в массив lang
-	 * @param {object} object - литерал языковой
+	 * 
+	 * @param {Object} object - литерал языковой
 	 */
 	my.addMessage = function(object) {
 		for(var index in object) {
@@ -84,7 +87,8 @@
 	};
 	
 	/**
-	 * @desc Абстракция для всплывающих уведомлений
+	 * Абстракция для всплывающих уведомлений
+	 * 
 	 * @param {string} text - текст сообщения
 	 * @param {string} title - заголовок (по умолчанию "Уведомление")
 	 * @param {function} foo - функция вызывается после закрытия всплывающего окна
@@ -106,11 +110,12 @@
 	
 	
 	/*
-     * @desc Декоратор для функции $.get, препятсвует множественному выполнению
-     * @param string url - адрес обработчика
-     * @param foo - функция выполняется при положительном обращении к обработчику
-     * @param string type - тип возвращаемых данных text|json
-	 * @param fail - функция выполняется при неудачном обращении к обработчику
+     * Декоратор для функции $.get, препятсвует множественному выполнению
+     * 
+     * @param {string} url - адрес обработчика
+     * @param {string} foo - функция выполняется при положительном обращении к обработчику
+     * @param {string} type - тип возвращаемых данных text|json
+	 * @param {string} fail - функция выполняется при неудачном обращении к обработчику
      */
 	my.get = function(url, foo, type, fail) {
 		type = type || 'text';
@@ -129,20 +134,21 @@
 				if (fail !== undefined) fail();
 			});
 		}
-	}
+	};
 	
 	/*
-     * @desc Декоратор для функции $.post, препятсвует множественному выполнению
-     * @param string url - адрес обработчика
-     * @param array parrams - массив параметров
-     * @param foo - функция выполняется при положительном обращении к обработчику
-     * @param string type - тип возвращаемых данных text|json
-	 * @param fail - функция выполняется при неудачном обращении к обработчику
+     * Декоратор для функции $.post, препятсвует множественному выполнению
+     * 
+     * @param {string} url - адрес обработчика
+     * @param {Array} parrams - массив параметров
+     * @param {string} foo - функция выполняется при положительном обращении к обработчику
+     * @param {string} type - тип возвращаемых данных text|json
+	 * @param {string} fail - функция выполняется при неудачном обращении к обработчику
      */
 	my.post = function(url, parrams, foo, type, fail) {
 		type = type || 'text';
 		fail = fail || function() {
-			alert('Что-то пошло не так, перезагрузите страницу и попробуйте снова');
+			alert(this.getMessage('ajax_fail'));
 		};
 
 		if (my.ajax == true) {
@@ -156,15 +162,16 @@
 				if (fail !== undefined) fail();
 			});
 		}
-	}
+	};
 
 	/*
-     * @desc Функция форматитрования числа, аналог php функции
-     * @param int|float number - исходное число
-     * @param float decimals - устанавливает число знаков после запятой
-     * @param float dec_point - устанавливает разделитель дробной части
-     * @param float thousands_sep - устанавливает разделитель тысяч
-     * @return int|float|string - возвращает отформатированное число
+     * Функция форматитрования числа, аналог php функции
+     * 
+     * @param {number} number - исходное число
+     * @param {number} decimals - устанавливает число знаков после запятой
+     * @param {number} dec_point - устанавливает разделитель дробной части
+     * @param {number} thousands_sep - устанавливает разделитель тысяч
+     * @return {string} - возвращает отформатированное число
      */
 	my.number_format = function ( number, decimals, dec_point, thousands_sep ) {  // Format a number with grouped thousands
 		//
@@ -202,15 +209,16 @@
 		kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, 0).slice(2) : "");
 
 		return minus + km + kw + kd;
-	}
+	};
 
 
 
 	/*
-     * @desc остаток от деления для дробных чисел
-     * @param float a - делимое
-     * @param float b - делитель
-     * @return float c - остаток от деления
+     * остаток от деления для дробных чисел
+     * 
+     * @param {number} a - делимое
+     * @param {number} b - делитель
+     * @return {number} остаток от деления
      */
 	my.fmod = function(a, b) {
 		var m;
@@ -224,9 +232,10 @@
 	};
 	
 	/*
-     * @desc вспомогательная функция для функции - остаток от деления для дробных чисел
-     * @param float f - число
-     * @return float c - количество знаков после запятой
+     * вспомогательная функция для функции - остаток от деления для дробных чисел
+     * 
+     * @param {number} f - число
+     * @return {number} количество знаков после запятой
      */
     my.count_char_after_dot = function(f) {
         var c = 0;
@@ -236,28 +245,31 @@
             f *= 10;
         }
         return c;
-    }
+    };
 	
 	/*
-     * @desc уберет экранирование html тегов
-     * @param jQuery obj - в каком теге применить функцию
+     * уберет экранирование html тегов
+     * 
+     * @param {jQuery} obj - в каком теге применить функцию
+     * @param {string} html без экранированных символов
      */
-	my.noScreening = function(obj) {
+	my.noScreening = function (obj) {
 		if (obj.length > 0) {
 			var str = obj.html(),
-				i = 0, j = 0, tmp ='', ch;
-			str = str.replace(RegExp("&lt;",'g'),'<').replace(RegExp("&gt;",'g'),'>').replace(RegExp("&amp;",'g'),'&').replace(RegExp("&quot;",'g'),'"');
-			
+				i = 0, j = 0, tmp = '', ch;
+			str = str.replace(RegExp("&lt;", 'g'), '<').replace(RegExp("&gt;", 'g'), '>').replace(RegExp("&amp;", 'g'), '&').replace(RegExp("&quot;", 'g'), '"');
+
 //		.replace(RegExp("»",'g'),'"').replace(RegExp("«",'g'),'"')
-			
-			obj.html(str);	
+
+			obj.html(str);
 		}
-	}
+	};
 	
 	/*
-     * @desc возвращает массив без повторяющихся значений
-     * @param array arr - массив
-	 * @return array - массив
+     * возвращает массив без повторяющихся значений
+     * 
+     * @param {Array} arr - массив
+	 * @return {Array} - массив
      */
 	my.array_unique = function(arr) {
 		var sorter = {};
@@ -269,14 +281,16 @@
 			arr.push(i);
 		}
 		return arr;
-	}
+	};
+	
 	
 	/*
-	 * @desc проверяет значение на нахождение в массиве
-	 * @param mixed needle - значение, которое ищем
-	 * @param array haystack - массив значений в котором ищем
-	 * @param bool strict - если true использует строгое сравенение
-	 * @return bool
+	 * проверяет значение на нахождение в массиве
+	 * 
+	 * @param {mixed} needle - значение, которое ищем
+	 * @param {Array} haystack - массив значений в котором ищем
+	 * @param {bool} strict - если true использует строгое сравенение
+	 * @return {bool}
 	 */
 	my.in_array = function (needle, haystack, strict) {
 		strict = strict || false;
@@ -292,22 +306,24 @@
 	};
 	
 	/*
-     * @desc возвращает слово в нужном склонении в зависимости от количества
-     * @param int count - количество объектов
-     * @param string one - склонение слово при единице
-     * @param string two - склонение слово при паре
-     * @param string five - склонение слово при пяти элементах
-	 * @return string слово
+     * возвращает слово в нужном склонении в зависимости от количества
+     * 
+     * @param {number} count - количество объектов
+     * @param {string} one - склонение слово при единице
+     * @param {string} two - склонение слово при паре
+     * @param {string} five - склонение слово при пяти элементах
+	 * @return {string} слово в нужном склонении
      */
 	my.decl = function (count, one, two, five) {
-		mas = {1: one, 2: two, 5: five};
+		var mas = {1: one, 2: two, 5: five};
 		return mas[this.getDeclNum(count)];
-	}
+	};
 
 	/*
-     * @desc возвращает цифру (1, 2, 5) в зависимости от количества
-     * @param int number - количество объектов
-	 * @return int число 1, 2, 5
+     * возвращает цифру (1, 2, 5) в зависимости от количества
+     * 
+     * @param {number} number - количество объектов
+	 * @return {number} число 1, 2, 5
      */
 	my.getDeclNum = function (number) {
 		var n100 = number % 100;
@@ -321,16 +337,17 @@
 			return 2;
 		else
 			return 5;
-	}
+	};
 	
 	/*
-	 * @desc возвращает массив со значениями GET параметров
-	 * @return array - массив
+	 * возвращает массив со значениями GET параметров
+	 * 
+	 * @return {Array} - массив
 	 */
 	my.getUrlVar = function() {
-		var tmp = new Array(),     // два вспомагательных
-			tmp2 = new Array(),     // массива
-			param = new Array();
+		var tmp = [],     // два вспомагательных
+			tmp2 = [],     // массива
+			param = [];
 		
 		var get = location.search;  // строка GET запроса
 		if(get != '') {
@@ -342,16 +359,17 @@
 		}
 		
 		return param;
-	}
+	};
 
 	/*
-	 * @desc возвращает массив со значениями HASH параметров
-	 * @return array - массив
+	 * возвращает массив со значениями HASH параметров
+	 * 
+	 * @return {Array} - массив
 	 */
 	my.getUrlHash = function() {
-		var tmp = new Array(),     // два вспомагательных
-			tmp2 = new Array(),     // массива
-			param = new Array();
+		var tmp = [],     // два вспомагательных
+			tmp2 = [],     // массива
+			param = [];
 
 		var hash = location.hash;  // строка GET запроса
 		if(hash != '') {
@@ -363,6 +381,6 @@
 		}
 
 		return param;
-	}
+	};
 	
 })(window.my = window.my || {});
