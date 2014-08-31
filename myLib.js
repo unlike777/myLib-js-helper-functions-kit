@@ -7,6 +7,8 @@
 *
 * getLang() - Определяет текущий язык сайта (по первой секции url), если ничего не найдено возвращается первый из доступных языков
 * getMessage(name) - Возвращает языковую переменную из массива lang, в зависимости от текущего языка сайта
+* addMessage(object) - Добавляет языковую переменную в массива lang, object - литерал содержащий переводы на разные языки
+* alert(text, title, foo) - Абстракция для всплывающих сообщений
 * get(url, foo, type, fail) - Декоратор для функции $.get, препятсвует множественному выполнению (требуется jQuery)
 * post(url, parrams, foo, type, fail) - Декоратор для функции $.post, препятсвует множественному выполнению (требуется jQuery)
 * number_format( number, decimals, dec_point, thousands_sep ) - форматирует число, аналог php number_format (decimals по умолчанию 0)
@@ -70,6 +72,38 @@
 		
 		return (msg !== undefined) ? msg : '';
 	}
+	
+	/**
+	 * Определяет языковую переменную в массив lang
+	 * @param {object} object - литерал языковой
+	 */
+	my.addMessage = function(object) {
+		for(var index in object) {
+			this.lang[index] = object[index];
+		}
+	};
+	
+	/**
+	 * @desc Абстракция для всплывающих уведомлений
+	 * @param {string} text - текст сообщения
+	 * @param {string} title - заголовок (по умолчанию "Уведомление")
+	 * @param {function} foo - функция вызывается после закрытия всплывающего окна
+	 */
+	my.alert = function(text, title, foo) {
+		foo = foo || function() {};
+		title = title || 'Уведомление';
+
+		$('.popup__title').html(title);
+		$('.popup__msg').html(text);
+		$('.popup').fadeIn(300);
+
+		$('.popup__cross, .popup__bg').unbind('click').on('click', function() {
+			$('.popup').fadeOut(300, function() {
+				foo();
+			});
+		});
+	};
+	
 	
 	/*
      * @desc Декоратор для функции $.get, препятсвует множественному выполнению
