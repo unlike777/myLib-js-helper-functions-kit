@@ -35,6 +35,10 @@
 		ajax_fail: {
 			ru: 'Что-то пошло не так, перезагрузите страницу и попробуйте снова',
 			en: 'Something went wrong, reload the page and try again'
+		},
+		alert: {
+			ru: 'Уведомление',
+			en: 'Alert'
 		}
 	};
 
@@ -54,12 +58,12 @@
 			
 		lang = lang[1];
 		
-		if (this.in_array(lang, this.langs)) {
+		if (my.in_array(lang, my.langs)) {
 			return lang;
 		}
 		
 		//если ничего не найдено первый в списке язык по умолчанию
-		return this.langs[0];
+		return my.langs[0];
 	};
 	
 	/**
@@ -69,8 +73,8 @@
      * @return {string} - возвращает языкову переменную
      */
 	my.getMessage = function(name) {
-		var lang = this.getLang(),
-			msg = this.lang[name][lang];
+		var lang = my.getLang(),
+			msg = my.lang[name][lang];
 		
 		return (msg !== undefined) ? msg : '';
 	};
@@ -82,7 +86,7 @@
 	 */
 	my.addMessage = function(object) {
 		for(var index in object) {
-			this.lang[index] = object[index];
+			my.lang[index] = object[index];
 		}
 	};
 	
@@ -95,14 +99,16 @@
 	 */
 	my.alert = function(text, title, foo) {
 		foo = foo || function() {};
-		title = title || 'Уведомление';
+		title = title || my.getMessage('alert');
 
+		var time = 300;
+		
 		$('.popup__title').html(title);
 		$('.popup__msg').html(text);
-		$('.popup').fadeIn(300);
+		$('.popup').fadeIn(time);
 
 		$('.popup__cross, .popup__bg').unbind('click').on('click', function() {
-			$('.popup').fadeOut(300, function() {
+			$('.popup').fadeOut(time, function() {
 				foo();
 			});
 		});
@@ -120,7 +126,7 @@
 	my.get = function(url, foo, type, fail) {
 		type = type || 'text';
 		fail = fail || function() {
-			alert(this.getMessage('ajax_fail'));
+			alert(my.getMessage('ajax_fail'));
 		};
 
 		if (my.ajax == true) {
@@ -148,7 +154,7 @@
 	my.post = function(url, parrams, foo, type, fail) {
 		type = type || 'text';
 		fail = fail || function() {
-			alert(this.getMessage('ajax_fail'));
+			alert(my.getMessage('ajax_fail'));
 		};
 
 		if (my.ajax == true) {
@@ -222,7 +228,7 @@
      */
 	my.fmod = function(a, b) {
 		var m;
-        m = this.count_char_after_dot(a) > this.count_char_after_dot(b) ? this.count_char_after_dot(a) : this.count_char_after_dot(b);
+        m = my.count_char_after_dot(a) > my.count_char_after_dot(b) ? my.count_char_after_dot(a) : my.count_char_after_dot(b);
 
         var d = Math.pow(10, m);
         a *= d;
@@ -315,7 +321,7 @@
      */
 	my.decl = function (count, one, two, five) {
 		var mas = {1: one, 2: two, 5: five};
-		return mas[this.getDeclNum(count)];
+		return mas[my.getDeclNum(count)];
 	};
 
 	/**
