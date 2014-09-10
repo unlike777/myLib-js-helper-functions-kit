@@ -8,6 +8,7 @@
 * getLang() - Определяет текущий язык сайта (по первой секции url), если ничего не найдено возвращается первый из доступных языков
 * getMessage(name) - Возвращает языковую переменную из массива lang, в зависимости от текущего языка сайта
 * addMessage(object) - Добавляет языковую переменную в массива lang, object - литерал содержащий переводы на разные языки
+* imgpreload(imgs, foo) - Прелоад картинок
 * alert(text, title, foo) - Абстракция для всплывающих сообщений
 * get(url, foo, type, fail) - Декоратор для функции $.get, препятсвует множественному выполнению (требуется jQuery)
 * post(url, parrams, foo, type, fail) - Декоратор для функции $.post, препятсвует множественному выполнению (требуется jQuery)
@@ -88,6 +89,58 @@
 		for(var index in object) {
 			my.lang[index] = object[index];
 		}
+	};
+
+
+	/**
+	 * Предзагружает картинки, по завршению вызывает callback функцию
+	 * 
+	 * @param {String|jQuery|Array} imgs - набор картинок
+	 * @param {String} foo - callback по завершению загрузок
+	 */
+	my.imgpreload = function(imgs, foo) {
+		var arr = [];
+		foo = foo || function() {};
+		
+		//если селектор
+		if (imgs instanceof String) {
+			imgs = $(imgs);
+		}
+		
+		//если jQuery объект
+		if (imgs instanceof jQuery) {
+			imgs.each(function() {
+				var $this = $(this),
+					src = $this.attr('src');
+				
+				if ($.trim(src) != '') {
+					arr.push(src);
+				}
+			});
+		} else if (imgs instanceof Array) {
+			arr = imgs;
+		}
+		
+		var loaded = 0,
+			count = arr.length;
+		
+		if (count) {
+			for(var i = 0; i < count; i++) {
+				var img     = new Image();
+				img.onload  = function() {
+					if(++loaded == count) {
+						foo();
+					}
+				};
+				img.src = arr[i];
+			}
+		} else {
+			setTimeout(function() {
+				foo();
+			}, 100);
+		}
+		
+		
 	};
 	
 	/**
