@@ -3,7 +3,7 @@
  * https://github.com/unlike777/myLib-js-helper-functions-kit
  *
  * langs - массив с доступными языками
- * lang - массив с языковыми переменными
+ * messages - массив с языковыми переменными
  * ajax - флаг проверки выполнения ajax запросов
  *
  * getLang() - Определяет текущий язык сайта (по первой секции url), если ничего не найдено возвращается первый из доступных языков
@@ -34,7 +34,7 @@
 	my.langs = ['ru', 'en'];
 
 	//языковые переменные
-	my.lang = {
+	my.messages = {
 		ajax_fail: {
 			ru: 'Что-то пошло не так, перезагрузите страницу и попробуйте снова',
 			en: 'Something went wrong, reload the page and try again'
@@ -77,7 +77,7 @@
      */
 	my.getMessage = function(name) {
 		var lang = my.getLang(),
-			msg = my.lang[name][lang];
+			msg = my.messages[name][lang];
 		
 		return (msg !== undefined) ? msg : '';
 	};
@@ -89,7 +89,7 @@
 	 */
 	my.addMessage = function(object) {
 		for(var index in object) {
-			my.lang[index] = object[index];
+			my.messages[index] = object[index];
 		}
 	};
 
