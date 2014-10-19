@@ -24,6 +24,7 @@
  * getDeclNum(number) - возвращает цифру (1, 2, 5) в зависимости от количества
  * getUrlVar() - вернет ассоциативный массив параметров get строки
  * getUrlHash() - разбирает хэш адреса на параметры как get строку, возвращает ассоциативный массив
+ * getUrl() - вернет секцию из текущего пути, или если num не задан то массив содержащий все секции
  *
  */
 
@@ -467,6 +468,18 @@
 		}
 
 		return param;
+	};
+
+	/**
+	 * вернет секцию из текущего пути, или если num не задан то массив содержащий все секции
+	 * @param num
+	 * @returns {string}
+	 */
+	my.getUrl = function(num) {
+		var arr = location.pathname.split('/');
+		arr.shift();
+
+		return (num !== undefined) ? arr[num] : arr;
 	};
 	
 })(window.my = window.my || {});
