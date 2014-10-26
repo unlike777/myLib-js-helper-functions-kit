@@ -15,6 +15,7 @@
  * get(url, foo, type, fail) - Декоратор для функции $.get, препятсвует множественному выполнению (требуется jQuery)
  * post(url, parrams, foo, type, fail) - Декоратор для функции $.post, препятсвует множественному выполнению (требуется jQuery)
  * number_format( number, decimals, dec_point, thousands_sep ) - форматирует число, аналог php number_format (decimals по умолчанию 0)
+ * strip_tags(str) - Убирает все теги из текста, аналог php функции strip_tags
  * fmod(a,b) - остаток от деления дробных чисел
  * count_char_after_dot(f) - количество знаков после запятой
  * noScreening(obj) - убирает экранирование html тегов
@@ -299,6 +300,15 @@
 		return minus + km + kw + kd;
 	};
 
+	/**
+	 * Убирает все теги из текста, аналог php функции strip_tags
+	 * 
+	 * @param str
+	 * @returns {XML|string|void}
+	 */
+	my.strip_tags = function(str) {
+		return str.replace(/<\/?[^>]+>/gi, '');
+	};
 
 
 	/**
