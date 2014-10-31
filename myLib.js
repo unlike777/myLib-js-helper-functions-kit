@@ -313,11 +313,13 @@
 	/**
 	 * Убирает все теги из текста, аналог php функции strip_tags
 	 * 
-	 * @param str
+	 * @param {string} str - исходная строка
+	 * @param {string} replace - на что меняем, по умолчанию пусто
 	 * @returns {XML|string|void}
 	 */
-	my.strip_tags = function(str) {
-		return str.replace(/<\/?[^>]+>/gi, '');
+	my.strip_tags = function(str, replace) {
+		replace = replace || '';
+		return str.replace(/<\/?[^>]+>/gi, replace);
 	};
 
 
