@@ -452,12 +452,12 @@
 	/**
 	 * возвращает массив со значениями GET параметров
 	 * 
-	 * @return {Array} - массив
+	 * @return {Object} - литерал
 	 */
 	my.getUrlVar = function() {
 		var tmp = [],     // два вспомагательных
 			tmp2 = [],     // массива
-			param = [];
+			param = {};
 		
 		var get = location.search;  // строка GET запроса
 		if(get != '') {
@@ -474,12 +474,12 @@
 	/**
 	 * возвращает массив со значениями HASH параметров
 	 * 
-	 * @return {Array} - массив
+	 * @return {Object} - литерал
 	 */
 	my.getUrlHash = function() {
 		var tmp = [],     // два вспомагательных
 			tmp2 = [],     // массива
-			param = [];
+			param = {};
 
 		var hash = location.hash;  // строка GET запроса
 		if(hash != '') {
