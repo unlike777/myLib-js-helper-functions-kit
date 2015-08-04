@@ -11,7 +11,7 @@
 ####Вспомогательные
 * ajax - флаг проверки выполнения ajax запросов
 * checkFileSize(input, max) - Функция проверяет, загружаемый файл, на допустимый размер
-* imgpreload(imgs, foo) - Прелоад картинок
+* imgload(imgs, foo) - Прелоад картинок
 * scrollY - Возвращает позицию прокрутки окна, поддерживает IE
 * number_format( number, decimals, dec_point, thousands_sep ) - форматирует число, аналог php number_format (decimals по умолчанию 0)
 * strip_tags(str) - Убирает все теги из текста, аналог php функции strip_tags

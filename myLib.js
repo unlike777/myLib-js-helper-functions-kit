@@ -10,7 +10,7 @@
  * getMessage(name) - Возвращает языковую переменную из массива lang, в зависимости от текущего языка сайта
  * addMessage(object) - Добавляет языковую переменную в массива lang, object - литерал содержащий переводы на разные языки
  * checkFileSize(input, max) - Функция проверяет, загружаемый файл, на допустимый размер
- * imgpreload(imgs, foo) - Прелоад картинок
+ * imgload(imgs, foo) - Прелоад картинок
  * alert(text, title, foo) - Абстракция для всплывающих сообщений
  * get(url, foo, type, fail) - Декоратор для функции $.get, препятсвует множественному выполнению (требуется jQuery)
  * post(url, parrams, foo, type, fail) - Декоратор для функции $.post, препятсвует множественному выполнению (требуется jQuery)
@@ -130,7 +130,7 @@
 	 * @param {String|jQuery|Array} imgs - набор картинок
 	 * @param {String} foo - callback по завершению загрузок
 	 */
-	my.imgpreload = function(imgs, foo) {
+	my.imgload = function(imgs, foo) {
 		var arr = [];
 		foo = foo || function() {};
 		
