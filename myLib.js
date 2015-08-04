@@ -126,17 +126,19 @@
 	
 	/**
 	 * Предзагружает картинки, по завршению вызывает callback функцию
-	 * 
-	 * @param {String|jQuery|Array} imgs - набор картинок
+	 *
+	 * @param {String|jQuery|Array} imgs - набор картинок или путь до картинки
 	 * @param {String} foo - callback по завершению загрузок
 	 */
 	my.imgload = function(imgs, foo) {
 		var arr = [];
 		foo = foo || function() {};
 		
-		//если селектор
-		if (imgs instanceof String) {
-			imgs = $(imgs);
+		//если путь до картинки
+		if (typeof(imgs) == 'string') {
+			var tmp = [];
+			tmp.push(imgs);
+			imgs = tmp;
 		}
 		
 		//если jQuery объект
@@ -171,8 +173,6 @@
 				foo();
 			}, 100);
 		}
-		
-		
 	};
 	
 	/**
